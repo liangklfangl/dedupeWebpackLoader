@@ -1,0 +1,25 @@
+import R from "ramda";
+/**
+ * [dedupe description]
+ * @param  {[type]} config [description]
+ * @return {[type]}        [description]
+ */
+function dedupe(rule){
+  return  rule.test.toString().replace(/[^a-z]/g,""); 
+}
+
+/**
+ * Dedupe our loader
+ * @param  {[type]} webpackConfig [description]
+ * @return {[type]}               [description]
+ */
+export default function dedupeLoader(webpackConfig){
+ 
+ let rules = webpackConfig.module.rules;
+ for(let ruleIndex=0,len=rules.length; ruleIndex<len;ruleIndex++){
+  let test = rules[ruleIndex].test.toString().replace(/[^a-z]/g,""); 
+  //Get special rule
+   webpackConfig = R.takeLastWhile(dedupe,rules);
+ } 
+ return webpackConfig;
+}
