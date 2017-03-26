@@ -1,4 +1,4 @@
-import R from "ramda";
+const R = require("ramda");
 /**
  * [dedupe description]
  * @param  {[type]} config [description]
@@ -13,7 +13,7 @@ function dedupe(rule){
  * @param  {[type]} webpackConfig [description]
  * @return {[type]}               [description]
  */
-export default function dedupeLoader(webpackConfig){
+ function dedupeLoader(webpackConfig){
  
  let rules = webpackConfig.module.rules;
  for(let ruleIndex=0,len=rules.length; ruleIndex<len;ruleIndex++){
@@ -22,4 +22,9 @@ export default function dedupeLoader(webpackConfig){
    webpackConfig = R.takeLastWhile(dedupe,rules);
  } 
  return webpackConfig;
+}
+
+
+module.exports = {
+	dedupeLoader
 }
